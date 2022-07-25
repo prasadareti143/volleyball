@@ -1,0 +1,33 @@
+pipeline:
+    name: Build volleyball
+    identifier: Build_volleyball_1658723238915
+    projectIdentifier: Default_Project_1658386540359
+    orgIdentifier: default
+    properties:
+        ci:
+            codebase:
+                connectorRef: account.Github_OAuth_1658723179940
+                repoName: prasadareti143/volleyball
+                build: <+input>
+    stages:
+        - stage:
+              name: Build
+              identifier: Build
+              type: CI
+              spec:
+                  cloneCodebase: true
+                  infrastructure:
+                      type: KubernetesHosted
+                      spec:
+                          identifier: k8s-hosted-infra
+                  execution:
+                      steps:
+                          - step:
+                                type: Run
+                                name: Echo Welcome Message
+                                identifier: Run
+                                spec:
+                                    connectorRef: account.harnessImage
+                                    image: alpine
+                                    shell: Sh
+                                    command: 'echo "Welcome to Harness CI" '
